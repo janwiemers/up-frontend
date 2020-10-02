@@ -1,0 +1,11 @@
+node_modules
+src
+eslintrc.js
+.gitignore
+.prettierrc
+.babel.config.js
+Dockerfile
+Makefile
+package-lock.json
+tsconfig.json
+README.md

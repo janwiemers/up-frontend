@@ -23,7 +23,7 @@
     <div class="monitor-history">
       <div>
         <div
-          v-for="check in checks"
+          v-for="check in monitor.checks"
           v-bind:key="check.id"
           :class="`monitor-check monitor-up-${check.up} tooltip`"
           :data-tooltip="formatTime(check.createdAt)"
@@ -37,45 +37,19 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import axios from "axios";
 import dayjs from "dayjs";
-
-type monitorType = {
-  name: string;
-  interval: number;
-  createdAt: string;
-  protocol: string;
-  target: string;
-  expectation: string;
-};
+import { monitorType } from "@/types";
 
 @Options({
   data() {
     return {
-      checks: [],
-      interval: null,
       meta: ["target", "protocol", "createdAt"],
       displayMeta: false,
       displayMetaText: "more"
     };
   },
 
-  async created() {
-    await this.load();
-    this.interval = setInterval(this.load, this.monitor.interval / 1000000);
-  },
-
-  beforeUnmount() {
-    clearInterval(this.interval);
-  },
-
   methods: {
-    async load() {
-      const request = await axios.get(
-        `http://localhost:8080/application/${this.monitor.id}/checks`
-      );
-      this.checks = request.data;
-    },
     toggleMetaDisplay() {
       if (this.displayMeta) {
         this.displayMeta = false;
@@ -92,14 +66,16 @@ type monitorType = {
       return this.checks[idx];
     },
     getMinTimestamp(): string {
-      const firstItem: monitorType = this.getChecksItem(0);
-      if (!firstItem) return "";
-      return this.formatTime(firstItem.createdAt);
+      return "";
+      // const firstItem: monitorType = this.getChecksItem(0);
+      // if (!firstItem) return "";
+      // return this.formatTime(firstItem.createdAt);
     },
     getMaxTimestamp(): string {
-      const lastItem: monitorType = this.getChecksItem(this.checks.length - 1);
-      if (!lastItem) return "";
-      return this.formatTime(lastItem.createdAt);
+      return "";
+      // const lastItem: monitorType = this.getChecksItem(this.checks.length - 1);
+      // if (!lastItem) return "";
+      // return this.formatTime(lastItem.createdAt);
     },
     calculateReadableInterval(): string {
       const i: number = this.monitor.interval / 10000000 / 60;
