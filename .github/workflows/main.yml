@@ -28,7 +28,7 @@ jobs:
       # - name: Tests
       #   run: npm run test:unit
 
-      - name: Tests
+      - name: Lint
         run: npm run lint
 
       - name: Build webpack
