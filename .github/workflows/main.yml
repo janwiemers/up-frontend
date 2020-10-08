@@ -31,5 +31,5 @@ jobs:
       - name: Tests
         run: npm run lint
 
-      - name: Build docker
-        run: make build.docker
+      - name: Build webpack
+        run: build.webpack
